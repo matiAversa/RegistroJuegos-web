@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Amor</title>
+    <title>Imagen Centrada</title>
     <style>
         body {
             background-color: white;
@@ -13,44 +13,23 @@
             height: 100vh;
             margin: 0;
         }
-        .heart {
-            position: relative;
-            width: 100px;
-            height: 100px;
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        .heart:before,
-        .heart:after {
-            content: "";
-            position: absolute;
-            width: 100px;
-            height: 160px;
-            border-radius: 100px 100px 0 0;
-            background: pink;
-            top: 0;
-            left: 50px;
-        }
-        .heart:before {
-            transform: rotate(-45deg);
-            transform-origin: 0 100%;
-        }
-        .heart:after {
-            transform: rotate(45deg);
-            transform-origin: 100% 100%;
-        }
-        .text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: Arial, sans-serif;
-            font-size: 20px;
-            color: white;
+        .image-container img {
+            max-width: 100%;
+            max-height: 100vh;
         }
     </style>
 </head>
 <body>
-    <div class="heart">
-        <div class="text">hola te amo</div>
+    <div class="image-container">
+        <img src="WhatsApp Image 2025-02-06 at 19.31.37.jpeg">
     </div>
+</body>
+</html>
+
 </body>
 </html>
