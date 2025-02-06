@@ -14,7 +14,7 @@ let textoPass = document.getElementById("pass");
 
 let usuarioNormal = new User("matias" , "passuser");
 let usuarioAdmin = new User("matiasAdmin", "passadmin");
-let usuarioFlor= new User("flor", "dejameTocarteElPapito");
+let usuarioFlor= new User("flor", "passFlor");
 let usuarios = [usuarioNormal, usuarioAdmin, usuarioFlor];
 
 let botonIngresar = document.getElementById("buttonValidacion"); 
