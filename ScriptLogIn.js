@@ -46,6 +46,7 @@ let usuarioFLor= new User("flor", "dejameTocarteElPapito");
             }
         }
     }
+    }
 
 function mostrarUsuarios(){
     let queEs = document.getElementById("buttonUsuarios").value;
