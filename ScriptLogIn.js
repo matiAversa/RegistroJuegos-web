@@ -14,7 +14,8 @@ class User{
 
     let usuarioNormal = new User("matias" , "passuser");
     let usuarioAdmin = new User("matiasAdmin", "passadmin");
-    let usuarios = [usuarioNormal, usuarioAdmin];
+let usuarioFLor= new User("flor", "dejameTocarteElPapito");
+    let usuarios = [usuarioNormal, usuarioAdmin, usuarioFlor];
 
     let botonIngresar = document.getElementById("buttonValidacion"); 
     /*botonIngresar.addEventListener("mouseover", function (){
@@ -37,6 +38,9 @@ class User{
             if ((userIngresado == usuarioAdmin.userName) && (passIngresada == usuarioAdmin.password)) {
                 window.location.href = "opcionesAdmin.html"
             } else {
+                if ((userIngresado == usuarioFlor.userName) && (passIngresada == usuarioFlor.password)) {
+                window.location.href = "userFlor.html"
+            }else{
                 Bvalid.style.background = "rgb(188, 59, 59)";
                 swal ("Los datos ingresados son incorrectos, vuelva a intentarlo.")
             }
