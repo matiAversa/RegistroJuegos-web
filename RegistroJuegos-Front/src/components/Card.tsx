@@ -6,12 +6,20 @@ interface CardProps {
 
 function Card(props: CardProps) {
     const { children } = props
-    const width = {
+    const Estilo = {
         width: "350px",
+        height: "350px",
+        position: "absolute" as const,
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
     };
 
     return (
-        <div className="card" style={width}>
+        <div className="card" style={Estilo}>
             <div className="card-body">
                 {children}
             </div>
@@ -43,6 +51,5 @@ function CardBody(props: CardBodyProps) {
         </Fragment>
     );
 }
-
-export default Card;
 export { CardBody };
+export default Card;

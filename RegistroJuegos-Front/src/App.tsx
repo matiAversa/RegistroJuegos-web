@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <Card>
-        <CardBody titulo={"buenas"} cuerpo={"tardes"} textoBoton={"boton abc"} direccion={"p"} /><br /><br />
+        <CardBody titulo={"Iniciar Sesion:"} cuerpo={"Ingrese su "} textoBoton={"boton abc"} direccion={"p"} /><br /><br />
         <List lista={["pepe", "popo", "pipi"]} />
       </Card>
 
