@@ -33,9 +33,16 @@ public class Persona {
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
     List<JuegoJugado> listaJJ = new ArrayList<>();
 
+    public Persona() {}
 
     public Persona(String mail, String password) {
         this.mail = mail;
         this.password = password;
+    }
+    public String getPassword (){
+        return this.password;
+    }
+    public Integer getId (){
+        return this.id;
     }
 }

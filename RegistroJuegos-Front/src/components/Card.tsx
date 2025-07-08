@@ -30,8 +30,8 @@ function Card(props: CardProps) {
 interface CardBodyProps {
     titulo: String
     cuerpo: String
-    textoBoton: String
-    direccion: string
+    textoBoton?: String
+    direccion?: string
     esEnlaceExterno?: boolean
 }
 

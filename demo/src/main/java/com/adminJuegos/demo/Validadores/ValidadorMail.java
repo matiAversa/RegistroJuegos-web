@@ -4,6 +4,8 @@ import com.adminJuegos.demo.Controllers.PersonaController;
 
 public class ValidadorMail {
     
+    PersonaController controllerPersona;
+
     public static String validar (String mail){
 
         if (mail.isEmpty()){
@@ -14,9 +16,9 @@ public class ValidadorMail {
             return "Se debe ingresar un mail valido.";
         }
 
-        if (new PersonaController().findByMail(mail) != null){
-            return "El mail ingresado ya se encuentra registrado en el sistema.";
-        }
+        //if (controllerPersona.findByMail(mail) != null){
+          //  return "El mail ingresado ya se encuentra registrado en el sistema.";
+        //}
 
         return "ok";
     }

@@ -1,49 +1,80 @@
 package com.adminJuegos.demo.Controllers;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.query.JSqlParserUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.adminJuegos.demo.Entitys.Persona;
 import com.adminJuegos.demo.Services.PersonaService;
 
-@Controller
+// DTO para recibir los datos del login
+class LoginRequest {
+    private String mail;
+    private String password;
+
+    // Getters y setters
+    public String getMail() { return mail; }
+    public void setMail(String mail) { this.mail = mail; }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+}
+
+@RestController
+@RequestMapping("/api")
 public class PersonaController {
 
-    PersonaService servicioPersona;
+    private final PersonaService servicioPersona;
 
-    public boolean LogIn(String mail, String password) {
-        boolean sePudo = false;
-        try {
-            sePudo = this.servicioPersona.LogIn(mail, password);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return sePudo;
-
+    @Autowired
+    public PersonaController(PersonaService servicioPersona) {
+        this.servicioPersona = servicioPersona;
     }
 
-    public boolean registrar(String mail, String password) {
-        Integer p = -1;
+    @PostMapping("/login")
+    public ResponseEntity<Void> logIn(@RequestBody LoginRequest loginRequest) {
+        String mail = loginRequest.getMail();
+        String password = loginRequest.getPassword();
+
         try {
-            p = this.servicioPersona.findByMail(mail);
-            if (p == -1){
+            if (servicioPersona.findByMail(mail) == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // 404
+            }
+            if (!servicioPersona.LogIn(mail, password)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // 401
+            }
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // 204
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500
+        }
+    }
+
+
+    public boolean registrar(String mail, String password) {
+        try {
+            Persona p = this.servicioPersona.findByMail(mail);
+            if (p == null) {
                 return false;
             }
-            this.servicioPersona.Registrar(new Persona (mail, password));
+            this.servicioPersona.Registrar(new Persona(mail, password));
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return true;
 
     }
 
-    public Integer getId (String mail){
-        return this.servicioPersona.findByMail(mail);
-    }
 
-    public Persona findById (Integer id ){
+    public Persona findById(Integer id) {
         return servicioPersona.findById(id);
     }
 
-    public Persona findByMail (String mail){
+    public Persona findByMail(String mail) {
         return servicioPersona.getPersonaPorMail(mail);
     }
 

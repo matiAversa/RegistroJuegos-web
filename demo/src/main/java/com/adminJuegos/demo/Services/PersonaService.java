@@ -25,8 +25,8 @@ public class PersonaService {
         return passDelMail.equals(password);
     }
 
-    public Integer findByMail (String mail){
-        return this.repoPersona.findByMail(mail).getId();
+    public Persona findByMail (String mail){
+        return this.repoPersona.findByMail(mail);
     }
 
     public Persona findById (Integer id){

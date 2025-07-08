@@ -1,13 +1,14 @@
-import Card, { CardBody } from "./components/Card"
-import List from "./components/List"
+import Card from "./components/Card"
+import VistaLogIn from "./components/LogIn"
 
 function App() {
 
   return (
     <>
       <Card>
-        <CardBody titulo={"Iniciar Sesion:"} cuerpo={"Ingrese su "} textoBoton={"boton abc"} direccion={"p"} /><br /><br />
-        <List lista={["pepe", "popo", "pipi"]} />
+        <h5>Iniciar Sesion:</h5>
+        <p>Ingrese su Mail y Contraseña: </p>
+        <VistaLogIn />
       </Card>
 
     </>
