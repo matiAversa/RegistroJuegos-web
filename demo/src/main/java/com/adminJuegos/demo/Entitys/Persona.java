@@ -39,6 +39,7 @@ public class Persona {
         this.mail = mail;
         this.password = password;
     }
+
     public String getPassword (){
         return this.password;
     }

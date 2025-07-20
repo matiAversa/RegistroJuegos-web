@@ -7,8 +7,8 @@ interface CardProps {
 function Card(props: CardProps) {
     const { children } = props
     const Estilo = {
-        width: "350px",
-        height: "350px",
+        width: "400px",
+        height: "400px",
         position: "absolute" as const,
         top: "50%",
         left: "50%",

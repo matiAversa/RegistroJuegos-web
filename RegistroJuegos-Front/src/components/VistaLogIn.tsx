@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type Props = {}
 
@@ -8,7 +9,9 @@ export default function VistaLogIn({ }: Props) {
     const [password, setPassword] = useState("");
     const [mensaje, setMensaje] = useState("");
 
-    const Autenticar = async (e: React.FormEvent) => {
+    const navigate = useNavigate();
+
+    const Autenticar = async () => {
 
         const response = await fetch("http://localhost:8080/api/login", {
             method: "POST",
@@ -16,18 +19,25 @@ export default function VistaLogIn({ }: Props) {
             body: JSON.stringify({ mail, password }),
         });
 
-        if (response.status === 204) {
-            setMensaje("¡Login exitoso!");
+        if (response.status === 200) {
+            setMensaje("User logged");
+            const data = await response.json();
+            if (data) {
+                localStorage.setItem('userId', data.id);
+            }
         } else if (response.status === 404) {
-            setMensaje("El mail no existe.");
+            setMensaje("mail not found. ERROR " + response.status);
         } else if (response.status === 401) {
-            setMensaje("Contraseña incorrecta.");
+            setMensaje("Incorrect Password. ERROR " + response.status);
         } else {
-            setMensaje("Error inesperado.");
+            setMensaje("Inesperated error. ERROR " + response.status);
         }
         console.log(mensaje);
     };
 
+    const RedirigirSignIn = () => {
+        navigate("/SignIn");
+    }
 
     return (
         <>
@@ -38,7 +48,9 @@ export default function VistaLogIn({ }: Props) {
             <input type="password" id="passwordInput" placeholder="Contraseña" onChange={e => setPassword(e.target.value)} />
             <br />
             <br />
-            <button className="btn btn-primary" onClick={Autenticar} >Ingresar</button>
+            <button className="btn btn-primary" onClick={Autenticar} >Ingresar</button><br />
+            <label>No tenes cuenta?</label>
+            <button className="btn btn-success" onClick={RedirigirSignIn}>Registrarse</button>
             <div className="alert alert-danger" role="alert">
                 {mensaje}
             </div>

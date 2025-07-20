@@ -1,16 +1,19 @@
-import Card from "./components/Card"
-import VistaSignIn from "./components/VistaSingIn"
+
+import Card from "../components/Card"
+import VistaSignIn from "../components/VistaSignIn"
 
 function SingIn() {
 
     return (
         <>
+
             <div>
                 <Card>
-                    Registrarse:
+                    <h5>Registrarse:</h5>
                     <VistaSignIn />
                 </Card>
             </div>
+
         </>
     );
 }

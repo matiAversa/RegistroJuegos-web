@@ -1,16 +1,16 @@
-import Card from "./components/Card"
-import VistaLogIn from "./components/LogIn"
+
+import { Route, Routes } from "react-router-dom";
+import SignIn from "./Pages/SignIn";
+import LogIn from "./Pages/LogIn";
 
 function App() {
 
   return (
     <>
-      <Card>
-        <h5>Iniciar Sesion:</h5>
-        <p>Ingrese su Mail y Contraseña: </p>
-        <VistaLogIn />
-      </Card>
-
+      <Routes>
+        <Route path="/" element={<LogIn />} />
+        <Route path="/SignIn" element={<SignIn />} />
+      </Routes>
     </>
   );
 }

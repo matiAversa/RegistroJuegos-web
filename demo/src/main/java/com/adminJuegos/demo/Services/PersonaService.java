@@ -16,13 +16,13 @@ public class PersonaService {
         this.repoPersona.save(persona);
     } 
 
-    public boolean LogIn (String mail, String password) throws Exception{
+    public Persona LogIn (String mail, String password) throws Exception{
         Persona p = repoPersona.findByMail(mail);
         if (p == null){
-            return false;
+            return null;
         }
         String passDelMail = p.getPassword();
-        return passDelMail.equals(password);
+        return passDelMail.equals(password) ? p : null;
     }
 
     public Persona findByMail (String mail){
