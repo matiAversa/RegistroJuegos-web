@@ -8,8 +8,20 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class DataJuegoJugado {
-    
-BigDecimal Calificacion;
-String nombre;
 
+    int id;
+    String nombre;
+    BigDecimal Calificacion;
+
+
+    public DataJuegoJugado(BigDecimal calificacion, String nombre) {
+        this.Calificacion=calificacion;
+        this.nombre=nombre;
+    }
+
+    public DataJuegoJugado(int id, BigDecimal calificacion, String nombre) {
+        this.Calificacion=calificacion;
+        this.nombre=nombre;
+        this.id=id;
+    }
 }

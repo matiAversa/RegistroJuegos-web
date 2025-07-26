@@ -22,12 +22,23 @@ import lombok.EqualsAndHashCode;
 public class Juego {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
     String nombre;
 
     @OneToMany(mappedBy = "juego", cascade = CascadeType.ALL)
-    List<JuegoJugado> listaJJ = new ArrayList<> ();
+    List<JuegoJugado> listaJJ = new ArrayList<>();
 
+    public Juego (){
+
+    }
+
+    public String getNombre (){
+        return this.nombre;
+    }
+
+    public Integer getId (){
+        return this.id;
+    }
 }

@@ -11,5 +11,7 @@ import com.adminJuegos.demo.Entitys.*;
 public interface IJuegoJugadoRepository extends JpaRepository<JuegoJugado, Integer>{
     public List<JuegoJugado> findByPersona (Persona persona);
 
+    public void deleteById(Integer id);
 
+    public JuegoJugado findByPersonaIdAndJuegoId(Integer idPersona, Integer idJuego);
 }

@@ -19,5 +19,10 @@ public class JuegoService {
         return repoJuego.findByNombre(nombre);
     }
 
+    public Juego findById (Integer id){
+        return repoJuego.findById(id).orElse(null);
+
+    }
+
 
 }

@@ -20,7 +20,9 @@ public class JuegoController {
         return servicioJuego.findByNombre(nombre);
     }
 
-    
+    public Juego getPorId (Integer id){
+        return servicioJuego.findById(id);
+    }
 
 
 }

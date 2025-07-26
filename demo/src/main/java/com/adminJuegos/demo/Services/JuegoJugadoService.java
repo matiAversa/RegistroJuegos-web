@@ -16,13 +16,26 @@ public class JuegoJugadoService {
     IJuegoJugadoRepository repoJuegoJugado;
 
     public List<DataJuegoJugado> getJuegosJugados (Persona persona){
-        return this.repoJuegoJugado.findByPersona(persona).stream().map(jj -> new DataJuegoJugado (jj.getCalificacion(), jj.getJuego().getNombre())).collect(Collectors.toList());
+        return this.repoJuegoJugado.findByPersona(persona).stream().map(jj -> new DataJuegoJugado (jj.getJuego().getId(),jj.getCalificacion(), jj.getJuego().getNombre())).collect(Collectors.toList());
     }
 
     public void saveJuegoJugado (Persona persona, Juego juego, BigDecimal calif){
 
         this.repoJuegoJugado.save(new JuegoJugado(persona, juego, calif));
 
+    }
+
+    public boolean DeleteJuegoJugado (Integer idPersona, Integer idJuego){
+        try{
+            JuegoJugado jj= repoJuegoJugado.findByPersonaIdAndJuegoId(idPersona,idJuego);
+            if (jj != null){
+                this.repoJuegoJugado.deleteById(jj.getId());
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

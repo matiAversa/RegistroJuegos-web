@@ -40,4 +40,20 @@ public class JuegoJugado {
         this.juego = juego;
         this.Calificacion = calif;
     }
+
+    public JuegoJugado (){
+
+    }
+
+    public BigDecimal getCalificacion() {
+        return this.Calificacion;
+    }
+
+    public Juego getJuego() {
+        return this.juego;
+    }
+
+    public Integer getId() {
+        return id;
+    }
 }

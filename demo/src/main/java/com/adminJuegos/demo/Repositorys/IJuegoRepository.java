@@ -17,5 +17,7 @@ public interface IJuegoRepository extends JpaRepository<Juego, Integer>{
     List<Juego> findJuegosNoJugadosPorPersona(@Param("persona") Persona persona);
 
     Juego findByNombre(String nombre);
+
+
     
 }

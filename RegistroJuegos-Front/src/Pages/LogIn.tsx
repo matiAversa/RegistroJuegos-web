@@ -6,7 +6,7 @@ function LogIn() {
 
     return (
         <>
-            <Card>
+            <Card Width={350} Height={350}>
                 <h5>Iniciar Sesion:</h5>
                 <p>Ingrese su Mail y Contraseña: </p>
                 <VistaLogIn />

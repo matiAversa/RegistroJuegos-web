@@ -7,29 +7,20 @@ export default function VistaSingIn({ }: Props) {
 
     const [mail, setMail] = useState("");
     const [password, setPassword] = useState("");
-    const [name, setName] = useState("");
-    const [user, setUser] = useState("");
     const [mensaje, setMensaje] = useState("");
 
     const navigate = useNavigate();
 
     const validarDatos = () => {
+        setMensaje("");
         let ok: boolean = false;
-        if (mail.trim()) {
+        if (mail.length == 0) {
             setMensaje("El mail no puede estar vacio.")
         } else {
-            if (password.trim()) {
+            if (password.length == 0) {
                 setMensaje("La contraseña no puede estar vacia.")
             } else {
-                if (user.trim()) {
-                    setMensaje("El usuario no debe estar vacio.")
-                } else {
-                    if (name.trim()) {
-                        setMensaje("El nombre no debe estar vacio.")
-                    } else {
-                        ok = true;
-                    }
-                }
+                ok = true;
             }
         }
         if (ok) {
@@ -40,16 +31,12 @@ export default function VistaSingIn({ }: Props) {
                 if (password.length < 6) {
                     setMensaje("La contraseña debe contener por lo menos 6 caracteres.");
                 } else {
-                    if (user.length < 4) {
-                        setMensaje("El usuario debe contener por lo menos 4 caracteres.");
-                    } else {
-                        Registrar();
-                        navigate("/")
-                    }
+                    Registrar();
                 }
             }
         }
     }
+
 
     const Registrar = async () => {
 
@@ -59,10 +46,10 @@ export default function VistaSingIn({ }: Props) {
             body: JSON.stringify({ mail, password }),
         });
 
-        if (response.status === 204) {
+        if (response.status === 201) {
             navigate("/");
         } else {
-            if (response.status === 401) {
+            if (response.status === 409) {
                 setMensaje("El mail ingresado ya esta registrado.");
             } else {
                 if (response.status === 500) {

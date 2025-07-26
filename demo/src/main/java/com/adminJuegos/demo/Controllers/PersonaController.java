@@ -38,7 +38,7 @@ public class PersonaController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Persona> logIn(@RequestBody UserRequest Body) {
+    public ResponseEntity<Integer> logIn(@RequestBody UserRequest Body) {
         String mail = Body.getMail();
         String password = Body.getPassword();
 
@@ -50,7 +50,7 @@ public class PersonaController {
             if (p==null) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null); // 401
             }
-            return ResponseEntity.status(HttpStatus.OK).body(p); // 204
+            return ResponseEntity.status(HttpStatus.OK).body(p.getId()); // 204
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build().ok(null); // 500
@@ -64,10 +64,10 @@ public class PersonaController {
         try {
             Persona p = this.servicioPersona.findByMail(mail);
             if (p != null) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
             }
             this.servicioPersona.Registrar(new Persona(mail, password));
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+            return ResponseEntity.status(HttpStatus.CREATED).body(null);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build().ok(null);

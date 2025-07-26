@@ -23,7 +23,11 @@ export default function VistaLogIn({ }: Props) {
             setMensaje("User logged");
             const data = await response.json();
             if (data) {
-                localStorage.setItem('userId', data.id);
+                localStorage.clear();
+                console.log(data)
+                localStorage.setItem('userId', data);
+
+                navigate("/VistaTodosJuegos")
             }
         } else if (response.status === 404) {
             setMensaje("mail not found. ERROR " + response.status);
