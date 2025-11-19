@@ -11,20 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.adminJuegos.demo.Entitys.Persona;
 import com.adminJuegos.demo.Services.PersonaService;
 
-// DTO para recibir los datos del login
-class UserRequest {
-    private String mail;
-    private String password;
-
-
-    // Getters y setters
-    public String getMail() { return mail; }
-    public void setMail(String mail) { this.mail = mail; }
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
-
-
-}
 
 @RestController
 @RequestMapping("/api")

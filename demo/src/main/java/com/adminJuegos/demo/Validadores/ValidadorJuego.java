@@ -8,9 +8,9 @@ public class ValidadorJuego {
             return "Se debe ingresar un Juego valido.";
         }
 
-        if (new JuegoController().getJuegoPorNombre(juego) != null){
-            return "El juego ingresado ya existe en el sistema.";
-        }
+       // if (new JuegoController().getJuegoPorNombre(juego) != null){
+          //  return "El juego ingresado ya existe en el sistema.";
+        //}
 
         return "ok";
     }

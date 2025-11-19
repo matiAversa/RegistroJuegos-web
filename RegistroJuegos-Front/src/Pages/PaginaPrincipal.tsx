@@ -1,23 +1,28 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/layout";
+import { useAuth } from "../context/AuthContext";
+
 
 type Props = {};
 
 export default function PaginaPrincipal({ }: Props) {
     const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
 
     useEffect(() => {
-        const userId = localStorage.getItem('mi_jwt');
-        console.log(userId)
-        if (!userId) {
-            navigate("/LogIn", { replace: true });
+        if (!isAuthenticated) {
+            navigate("/login");
         }
-    }, [navigate]);
+    }, [isAuthenticated, navigate]);
+
+    if (!isAuthenticated) return null;
+
 
     return (
         <Layout>
-            {localStorage.getItem('userId') && <h2>Bienvenido</h2>}
+            <h1>Bienvenido</h1>
+            <p>Has iniciado sesión correctamente.</p>
         </Layout>
     );
 }

@@ -2,6 +2,7 @@ package com.adminJuegos.demo.Controllers;
 
 import com.adminJuegos.demo.Services.PersonaService;
 import com.adminJuegos.demo.Entitys.Persona;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,10 +26,14 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @RestController
 public class AuthController {
 
-    private PersonaService servicioPersona;
-
+    PersonaService servicioPersona;
     @Value("${jwt.secret}")
     private String SECRET_KEY   ;
+
+    @Autowired
+    public AuthController(PersonaService servicioPersona) {
+        this.servicioPersona = servicioPersona;
+    }
 
     @PostMapping("/auth/google")
     public ResponseEntity<?> authGoogle(@RequestBody Map<String, String> body) {
@@ -36,7 +41,7 @@ public class AuthController {
             String idTokenString = body.get("credential");
             GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier
                     .Builder(GoogleNetHttpTransport.newTrustedTransport(), JacksonFactory.getDefaultInstance())
-                    .setAudience(Collections.singletonList("TU_CLIENT_ID"))
+                    .setAudience(Collections.singletonList("248141265838-c86ptjkolt2bp9h7sargs500kg0coitq.apps.googleusercontent.com"))
                     .build();
 
             GoogleIdToken idToken = verifier.verify(idTokenString);
@@ -60,6 +65,7 @@ public class AuthController {
             }
         } catch (Exception e) {
             String error = (e.getMessage() != null) ? e.getMessage() : "Error desconocido (STRING HARDCODEADO)";
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", error));
         }
     }
@@ -108,15 +114,16 @@ public class AuthController {
             }
         } catch (Exception e) {
             String error = (e.getMessage() != null) ? e.getMessage() : "Error desconocido";
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(Map.of("error", error));
         }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Integer> logIn(@RequestBody UserRequest Body) {
-        String mail = Body.getMail();
-        String password = Body.getPassword();
+    public ResponseEntity<String> logIn(@RequestBody Map<String, String > Body) {
+        String mail = Body.get("mail");
+        String password = Body.get("password");
 
         try {
             if (servicioPersona.findByMail(mail) == null) {
@@ -126,7 +133,9 @@ public class AuthController {
             if (p==null) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null); // 401
             }
-            return ResponseEntity.status(HttpStatus.OK).body(p.getId()); // 204
+
+            String token = generarToken(p.getId());
+            return ResponseEntity.status(HttpStatus.OK).body(token); // 204
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build().ok(null); // 500
@@ -134,16 +143,18 @@ public class AuthController {
     }
 
     @PostMapping("/SignIn")
-    public ResponseEntity<Void> registrar(@RequestBody UserRequest Body) {
-        String mail = Body.getMail();
-        String password = Body.getPassword();
+    public ResponseEntity<String> registrar(@RequestBody Map<String, String > Body) {
+        String mail = Body.get("mail");
+        String password = Body.get("password");
         try {
             Persona p = this.servicioPersona.findByMail(mail);
             if (p != null) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
             }
             this.servicioPersona.Registrar(new Persona(mail, password));
-            return ResponseEntity.status(HttpStatus.CREATED).body(null);
+            p = servicioPersona.findByMail(mail);
+            String token = generarToken(p.getId());
+            return ResponseEntity.status(HttpStatus.CREATED).body(token);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build().ok(null);

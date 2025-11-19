@@ -1,4 +1,6 @@
 import React, { ReactNode, useState } from "react";
+import { useAuth } from "../context/AuthContext"; // importa tu hook
+
 
 type LayoutProps = {
     children: ReactNode;
@@ -9,8 +11,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
     const handleUserMenuToggle = () => setUserMenuOpen((open) => !open);
 
-    const [refreshKey, setRefreshKey] = useState(0);
-    const recargarTodo = () => setRefreshKey(prev => prev + 1);
+    const { logout } = useAuth();
 
     return (
         <div style={{ display: 'flex', minHeight: '100vh', fontFamily: 'sans-serif' }}>
@@ -103,8 +104,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                         cursor: "pointer"
                                     }}
                                     onClick={() => {
-                                        localStorage.removeItem("mi_jwt");
-                                        recargarTodo();
+                                        setUserMenuOpen(false);
+                                        logout();
                                     }}
                                 >
                                     Cerrar sesión

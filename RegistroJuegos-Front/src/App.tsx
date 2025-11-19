@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import SignIn from "./Pages/SignIn";
 import LogIn from "./Pages/LogIn";
 import PaginaPrincipal from "./Pages/PaginaPrincipal"
-import VistaJuegosJugados from "./Pages/VistaTodosJuegos";
+import TodosJuegosView from "./Pages/TodosJuegosView";
 
 function App() {
 
@@ -13,7 +13,7 @@ function App() {
         <Route path="/" element={<PaginaPrincipal />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/SignIn" element={<SignIn />} />
-        <Route path="/VistaTodosJuegos" element={<VistaJuegosJugados />} />
+        <Route path="/TodosLosJuegos" element={<TodosJuegosView />} />
 
       </Routes>
     </>

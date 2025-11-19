@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
-// 1. Agregado para Google OAuth:
+
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 
-// 2. Usar la variable de entorno para la URL
 const API_URL = import.meta.env.VITE_API_URL;
 
 type Props = {};
@@ -14,6 +14,13 @@ export default function VistaLogIn({ }: Props) {
     const [password, setPassword] = useState("");
     const [mensaje, setMensaje] = useState("");
     const navigate = useNavigate();
+    const { login, logout } = useAuth();
+
+
+    useEffect(() => {
+        logout();
+    }, []);
+
 
     const Autenticar = async () => {
         const response = await fetch(`${API_URL}/login`, {
@@ -27,8 +34,9 @@ export default function VistaLogIn({ }: Props) {
             const data = await response.json();
             if (data) {
                 localStorage.clear();
-                localStorage.setItem('userId', data);
-                navigate("/VistaTodosJuegos");
+                localStorage.setItem('token', data);
+                login();
+                navigate("/");
             }
         } else if (response.status === 404) {
             setMensaje("mail not found. ERROR " + response.status);
@@ -55,9 +63,9 @@ export default function VistaLogIn({ }: Props) {
             if (response.status === 200) {
                 const data = await response.json();
                 localStorage.clear();
-                localStorage.setItem('mi_jwt', data.token); // Suponiendo que devuelves el userId
-                // Si devuelves un JWT, puedes guardar data.token
-                navigate("/VistaTodosJuegos");
+                localStorage.setItem('token', data.token);
+                login();
+                navigate("/");
             } else {
                 setMensaje("No se pudo iniciar sesión con Google.");
             }
