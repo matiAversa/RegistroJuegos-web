@@ -36,4 +36,7 @@ public class PersonaService {
     public Persona getPersonaPorMail ( String mail){
         return repoPersona.findByMail(mail);
     }
+
+
+
 }

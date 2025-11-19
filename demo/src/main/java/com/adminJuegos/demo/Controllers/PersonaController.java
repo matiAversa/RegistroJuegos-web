@@ -37,44 +37,6 @@ public class PersonaController {
         this.servicioPersona = servicioPersona;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<Integer> logIn(@RequestBody UserRequest Body) {
-        String mail = Body.getMail();
-        String password = Body.getPassword();
-
-        try {
-            if (servicioPersona.findByMail(mail) == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404
-            }
-            Persona p= servicioPersona.LogIn(mail, password);
-            if (p==null) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null); // 401
-            }
-            return ResponseEntity.status(HttpStatus.OK).body(p.getId()); // 204
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build().ok(null); // 500
-        }
-    }
-
-@PostMapping("/SignIn")
-    public ResponseEntity<Void> registrar(@RequestBody UserRequest Body) {
-        String mail = Body.getMail();
-        String password = Body.getPassword();
-        try {
-            Persona p = this.servicioPersona.findByMail(mail);
-            if (p != null) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
-            }
-            this.servicioPersona.Registrar(new Persona(mail, password));
-            return ResponseEntity.status(HttpStatus.CREATED).body(null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build().ok(null);
-        }
-    }
-
-
     public Persona findById(Integer id) {
         return servicioPersona.findById(id);
     }

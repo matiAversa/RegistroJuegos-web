@@ -28,7 +28,14 @@ public class Persona {
     @Column(unique=true)
     String mail;
 
+    @Column(nullable = true)
     String password;
+
+    @Column(nullable = true)
+    String oauthProvider;
+
+    @Column(nullable = true)
+    String oauthId;
 
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
     List<JuegoJugado> listaJJ = new ArrayList<>();
@@ -38,6 +45,12 @@ public class Persona {
     public Persona(String mail, String password) {
         this.mail = mail;
         this.password = password;
+    }
+
+    public Persona(String mail, String oauthProvider, String oauthId) {
+        this.mail = mail;
+        this.oauthProvider = oauthProvider;
+        this.oauthId = oauthId;
     }
 
     public String getPassword (){
