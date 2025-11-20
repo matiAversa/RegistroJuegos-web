@@ -11,15 +11,15 @@ public class DataJuegoJugado {
 
     int id;
     String nombre;
-    BigDecimal Calificacion;
+    Integer Calificacion;
 
 
-    public DataJuegoJugado(BigDecimal calificacion, String nombre) {
+    public DataJuegoJugado(Integer calificacion, String nombre) {
         this.Calificacion=calificacion;
         this.nombre=nombre;
     }
 
-    public DataJuegoJugado(int id, BigDecimal calificacion, String nombre) {
+    public DataJuegoJugado(int id, Integer calificacion, String nombre) {
         this.Calificacion=calificacion;
         this.nombre=nombre;
         this.id=id;

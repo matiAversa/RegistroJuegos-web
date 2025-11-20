@@ -2,12 +2,7 @@ package com.adminJuegos.demo.Entitys;
 
 import java.math.BigDecimal;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,21 +26,25 @@ public class JuegoJugado {
     @JoinColumn(name = "idJuego")
     Juego juego;
 
-    BigDecimal Calificacion;
+    Integer Calificacion;
+
+    @Column(nullable = true)
+    String descripcion;
 
 
 
-    public JuegoJugado (Persona persona, Juego juego, BigDecimal calif){
+    public JuegoJugado (Persona persona, Juego juego, Integer calif, String descripcion){
         this.persona = persona;
         this.juego = juego;
         this.Calificacion = calif;
+        this.descripcion = descripcion;
     }
 
     public JuegoJugado (){
 
     }
 
-    public BigDecimal getCalificacion() {
+    public Integer getCalificacion() {
         return this.Calificacion;
     }
 

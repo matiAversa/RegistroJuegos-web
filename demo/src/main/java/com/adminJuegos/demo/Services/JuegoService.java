@@ -19,15 +19,6 @@ public class JuegoService {
         this.repoJuego = repoJuego;
     }
 
-    public List<DataJuegoSinJugar> getJuegosNoJugadosPorPersona (Integer id){
-
-        List<Juego> listaSinProm = repoJuego.findJuegosNoJugadosPorPersona(new PersonaService().findById(id));
-        List<DataJuegoSinJugar> juegosConPromedio= new ArrayList<>() ;
-        listaSinProm.forEach(j -> {
-            juegosConPromedio.add(new DataJuegoSinJugar(j.getId(), j.getNombre(), 0));
-        });
-        return juegosConPromedio;
-    }
     public Juego findByNombre(String nombre){
         return repoJuego.findByNombre(nombre);
     }

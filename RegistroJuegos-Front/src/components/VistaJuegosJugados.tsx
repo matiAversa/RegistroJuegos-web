@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 
 type Props = {}
@@ -14,7 +16,7 @@ export default function VistaJuegosJugados({ }: Props) {
     const [juegoActivo, setJuegoActivo] = useState<number | null>(-1);
 
     const fetchData = async () => {
-        const response = await fetch(`http://localhost:8080/api/JuegosJugados?userId=${localStorage.getItem("userId")}`);
+        const response = await fetch(`${API_URL}/api/JuegosJugados?userId=${localStorage.getItem("userId")}`);
         if (response.status == 200) {
             const data = await response.json();
             setJuegosJugados(data);
@@ -33,10 +35,13 @@ export default function VistaJuegosJugados({ }: Props) {
 
 
     async function EliminarJuego() {
-        const response = await fetch('http://localhost:8080/api/EliminarJuegoJugado', {
+        const response = await fetch(`${API_URL}/api/EliminarJuegoJugado`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ userId: localStorage.getItem("userId"), juegoId: juegoActivo }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
+            body: JSON.stringify({ juegoId: juegoActivo }),
         });
 
         if (response.status == 204) {
@@ -55,15 +60,35 @@ export default function VistaJuegosJugados({ }: Props) {
     return (
 
         <>
-            <label>Seleccione un juego para eliminarlo.</label><br />
-            <ul className="list-group" style={{ width: "100%", margin: 0, padding: 0 }}>
-                {JuegosJugados.map((jueguito) => (
-                    <li className={`list-group-item list-group-item-action${juegoActivo === jueguito.id ? " active" : ""}`}
-                        key={jueguito.id} onClick={() => setJuegoActivo(jueguito.id)} > {jueguito.nombre} --- {jueguito.calificacion}/10</li>
-                ))}
-            </ul>
-            <button className="" onClick={EliminarJuego} >Eliminar</button>
+            <div className="container d-flex justify-content-end mt-5">
+                <table className="table table-bordered table-hover" style={{ maxWidth: 700 }}>
+                    <thead className="thead-light">
+                        <tr className="text-center">
+                            <th>Nombre del Juego</th>
+                            <th>Tu Calificación</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {juegosList.map((juego, id) => (
+                            <tr key={id} className="text-center align-middle">
+                                <td>{juego.nombre}</td>
+                                <td>
+                                    {juego.calificacion}
+                                    <span style={{ color: '#FFC107', fontSize: 20, marginLeft: 2 }}>⭐</span>
+                                </td>
+                                <td>
+                                    <button onClick={() => EliminarJuego(juego)} className="btn btn-danger">
+                                        Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </>
+
 
     );
 

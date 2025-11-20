@@ -30,24 +30,6 @@ public class JuegoController {
         this.servicioJuego = servicioJuego;
     }
 
-    @GetMapping("/JuegosSinCalificar")
-    public ResponseEntity<List<DataJuegoSinJugar>> getJuegosSinJugar (@RequestHeader("Authorization") String token){
-        try {
-            if (token.startsWith("Bearer ")) {
-                token = token.substring(7);
-            }
-            Claims claims = Jwts.parser()
-                    .setSigningKey(SECRET_KEY.getBytes()) // Importante usar el mismo encoding
-                    .parseClaimsJws(token)
-                    .getBody();
-            Integer id = claims.get("userId", Integer.class);
-
-            return ResponseEntity.ok(servicioJuego.getJuegosNoJugadosPorPersona(id));
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            return ResponseEntity.internalServerError().body(null);
-        }
-    }
 
     public Juego getJuegoPorNombre (String nombre){
         return servicioJuego.findByNombre(nombre);

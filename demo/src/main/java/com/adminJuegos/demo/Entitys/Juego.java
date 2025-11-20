@@ -33,6 +33,10 @@ public class Juego {
     public Juego (){
 
     }
+    public Juego(Integer id, String nombre){
+        this.id = id;
+        this.nombre = nombre;
+    }
 
     public String getNombre (){
         return this.nombre;

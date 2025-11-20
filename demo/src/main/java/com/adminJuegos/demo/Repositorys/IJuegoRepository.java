@@ -13,9 +13,6 @@ import com.adminJuegos.demo.Entitys.Persona;
 @Repository
 public interface IJuegoRepository extends JpaRepository<Juego, Integer>{
 
-    @Query("SELECT j FROM Juego j WHERE j NOT IN (SELECT jj.juego FROM JuegoJugado jj WHERE jj.persona = :persona)")
-    List<Juego> findJuegosNoJugadosPorPersona(@Param("persona") Persona persona);
-
     Juego findByNombre(String nombre);
 
 

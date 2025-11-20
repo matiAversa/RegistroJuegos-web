@@ -1,5 +1,6 @@
 import React, { ReactNode, useState } from "react";
 import { useAuth } from "../context/AuthContext"; // importa tu hook
+import { useNavigate } from "react-router-dom";
 
 
 type LayoutProps = {
@@ -8,7 +9,7 @@ type LayoutProps = {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     const [userMenuOpen, setUserMenuOpen] = useState(false);
-
+    const navigate = useNavigate();
     const handleUserMenuToggle = () => setUserMenuOpen((open) => !open);
 
     const { logout } = useAuth();
@@ -27,9 +28,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             }}>
                 <nav>
                     <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                        <li onClick={() => console.log("presiono")} style={{ padding: "18px 30px", cursor: "pointer", fontWeight: 500 }}>Todos los juegos</li>
-                        <li style={{ padding: "18px 30px", cursor: "pointer", fontWeight: 500 }}>Mis juegos</li>
-                        <li style={{ padding: "18px 30px", cursor: "pointer", fontWeight: 500 }}>Recomendar Juegos</li>
+                        <li onClick={() => navigate("/TodosLosJuegos")} style={{ padding: "18px 30px", cursor: "pointer", fontWeight: 500 }}>Todos los juegos</li>
+                        <li onClick={() => navigate("/MisJuegosJugados")} style={{ padding: "18px 30px", cursor: "pointer", fontWeight: 500 }}>Mis juegos</li>
+                        <li onClick={() => navigate("/RecomendarJuegos")} style={{ padding: "18px 30px", cursor: "pointer", fontWeight: 500 }}>Recomendar Juegos</li>
                     </ul>
                 </nav>
             </aside>
