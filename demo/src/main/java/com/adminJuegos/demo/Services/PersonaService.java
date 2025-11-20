@@ -8,7 +8,7 @@ import com.adminJuegos.demo.Repositorys.IPersonaRepository;
 
 @Service
 public class PersonaService {
-    
+
     @Autowired
     IPersonaRepository repoPersona;
 

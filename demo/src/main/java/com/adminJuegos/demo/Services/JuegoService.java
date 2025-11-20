@@ -1,7 +1,9 @@
 package com.adminJuegos.demo.Services;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.adminJuegos.demo.Entitys.*;
@@ -9,11 +11,22 @@ import com.adminJuegos.demo.Repositorys.IJuegoRepository;
 
 @Service
 public class JuegoService {
-    
+
     IJuegoRepository repoJuego;
 
-    public List<Juego> getJuegosNoJugadosPorPersona (Integer id){
-        return repoJuego.findJuegosNoJugadosPorPersona(new PersonaService().findById(id));
+    @Autowired
+    public JuegoService(IJuegoRepository repoJuego) {
+        this.repoJuego = repoJuego;
+    }
+
+    public List<DataJuegoSinJugar> getJuegosNoJugadosPorPersona (Integer id){
+
+        List<Juego> listaSinProm = repoJuego.findJuegosNoJugadosPorPersona(new PersonaService().findById(id));
+        List<DataJuegoSinJugar> juegosConPromedio= new ArrayList<>() ;
+        listaSinProm.forEach(j -> {
+            juegosConPromedio.add(new DataJuegoSinJugar(j.getId(), j.getNombre(), 0));
+        });
+        return juegosConPromedio;
     }
     public Juego findByNombre(String nombre){
         return repoJuego.findByNombre(nombre);
@@ -23,6 +36,5 @@ public class JuegoService {
         return repoJuego.findById(id).orElse(null);
 
     }
-
 
 }

@@ -1,8 +1,14 @@
 package com.adminJuegos.demo.Controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.adminJuegos.demo.Entitys.DataJuegoSinJugar;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import com.adminJuegos.demo.Entitys.Juego;
@@ -16,20 +22,31 @@ public class JuegoController {
     
     JuegoService servicioJuego;
 
+    @Value("${jwt.secret}")
+    private String SECRET_KEY;
+
     @Autowired
     public JuegoController(JuegoService servicioJuego) {
         this.servicioJuego = servicioJuego;
     }
 
     @GetMapping("/JuegosSinCalificar")
-    public List <Juego> getJuegosSinJugar (@RequestHeader("Authorization") String token){
-        if (token.startsWith("Bearer ")) {
-            token = token.substring(7);
+    public ResponseEntity<List<DataJuegoSinJugar>> getJuegosSinJugar (@RequestHeader("Authorization") String token){
+        try {
+            if (token.startsWith("Bearer ")) {
+                token = token.substring(7);
+            }
+            Claims claims = Jwts.parser()
+                    .setSigningKey(SECRET_KEY.getBytes()) // Importante usar el mismo encoding
+                    .parseClaimsJws(token)
+                    .getBody();
+            Integer id = claims.get("userId", Integer.class);
+
+            return ResponseEntity.ok(servicioJuego.getJuegosNoJugadosPorPersona(id));
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return ResponseEntity.internalServerError().body(null);
         }
-
-
-
-        return servicioJuego.getJuegosNoJugadosPorPersona(id);
     }
 
     public Juego getJuegoPorNombre (String nombre){

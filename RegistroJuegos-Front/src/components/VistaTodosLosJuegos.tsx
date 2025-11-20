@@ -32,7 +32,7 @@ export default function VistaTodosLosJuegos({ }: Props) {
 
     async function incializarLista() {
 
-        const response = await fetch(`${API_URL}/api/JuegosSinCalificar`
+        const response = await fetch(`${API_URL}/JuegosSinCalificar`
             , {
                 method: "GET",
                 headers: {
