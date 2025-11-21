@@ -79,13 +79,13 @@ export default function VistaJuegosJugados({ }: Props) {
     return (
         <>
             <div className="container d-flex justify-content-end mt-5">
-                <table className="table table-bordered table-hover" style={{ maxWidth: 700 }}>
+                <table className="table table-bordered table-hover" style={{ maxWidth: 1000 }}>
                     <thead className="thead-light">
                         <tr className="text-center">
-                            <th>Nombre del Juego</th>
-                            <th>Tu Calificación</th>
-                            <th>Descripción</th>
-                            <th>Acción</th>
+                            <th style={{ width: "28%" }}>Nombre del Juego</th>
+                            <th style={{ width: "22%" }}>Tu Calificación</th>
+                            <th style={{ width: "32%" }}>Descripción</th>
+                            <th style={{ width: "18%" }}>Acción</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -96,7 +96,7 @@ export default function VistaJuegosJugados({ }: Props) {
                                     {juego.calificacion}
                                     <span style={{ color: '#FFC107', fontSize: 20, marginLeft: 2 }}>⭐</span>
                                 </td>
-                                <td>{juego.descripcion}</td>
+                                <td className="text-break">{juego.descripcion}</td>
                                 <td>
                                     <button onClick={() => EliminarJuego(juego)} className="btn btn-danger">
                                         Eliminar
