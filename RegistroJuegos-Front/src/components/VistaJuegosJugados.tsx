@@ -1,60 +1,71 @@
 import { useEffect, useState } from "react";
 const API_URL = import.meta.env.VITE_API_URL;
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-
+type Juego = {
+    id: number;
+    nombre: string;
+    calificacion: string;
+}
 
 type Props = {}
 
 export default function VistaJuegosJugados({ }: Props) {
-    type Juego = {
-        id: number;
-        nombre: string;
-        calificacion: string;
-    }
 
-    const [JuegosJugados, setJuegosJugados] = useState<Juego[]>([]);
-    const [juegoActivo, setJuegoActivo] = useState<number | null>(-1);
+    const [juegosList, setJuegosList] = useState<Juego[]>([]);
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
 
-    const fetchData = async () => {
-        const response = await fetch(`${API_URL}/api/JuegosJugados?userId=${localStorage.getItem("userId")}`);
-        if (response.status == 200) {
-            const data = await response.json();
-            setJuegosJugados(data);
-        } else {
-            if (response.status == 204) {
-                setJuegosJugados([{ id: 0, nombre: "no hay juegos agrgados a tu lista", calificacion: "" }])
-            }
-        }
-
-    };
 
     useEffect(() => {
+        if (!isAuthenticated) {
+            navigate("/login");
+            return;
+        }
+        incializarLista();
+    },);
 
-        fetchData();
-    }, []);
+    if (!isAuthenticated) return null;
+
+    async function incializarLista() {
+        const response = await fetch(`${API_URL}/api/JuegosJugados`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
+        });
+        if (response.status === 200) {
+            const data = await response.json();
+            setJuegosList(data);
+        }
+    }
 
 
-    async function EliminarJuego() {
+    async function EliminarJuego(juego: Juego) {
         const response = await fetch(`${API_URL}/api/EliminarJuegoJugado`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + localStorage.getItem("token")
             },
-            body: JSON.stringify({ juegoId: juegoActivo }),
+            body: JSON.stringify({ juegoId: juego.id }),
         });
-
         if (response.status == 204) {
-            fetchData();
+            console.log("respuesta ")
         } else {
             if (response.status == 404) {
-
+                alert("no se pudo eliminar el juego (E404)")
             } else {
                 if (response.status == 500) {
+                    alert("no se pudo eliminar el juego (E500)")
 
                 }
             }
         }
+        incializarLista();
+
     }
 
     return (
@@ -70,8 +81,8 @@ export default function VistaJuegosJugados({ }: Props) {
                         </tr>
                     </thead>
                     <tbody>
-                        {juegosList.map((juego, id) => (
-                            <tr key={id} className="text-center align-middle">
+                        {juegosList.map((juego) => (
+                            <tr key={juego.id} className="text-center align-middle">
                                 <td>{juego.nombre}</td>
                                 <td>
                                     {juego.calificacion}

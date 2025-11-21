@@ -17,7 +17,6 @@ export default function VistaTodosLosJuegos({ }: Props) {
     const { isAuthenticated } = useAuth();
     const [juegosList, setJuegosList] = useState<Juego[]>([]);
 
-    // Estados para el modal
     const [modalOpen, setModalOpen] = useState(false);
     const [juegoSeleccionado, setJuegoSeleccionado] = useState<Juego | null>(null);
     const [calificacion, setCalificacion] = useState(0);
@@ -29,13 +28,12 @@ export default function VistaTodosLosJuegos({ }: Props) {
             return;
         }
         incializarLista();
-    }, [isAuthenticated, navigate]);
+    },);
 
     if (!isAuthenticated) return null;
 
     async function incializarLista() {
-        const response = await fetch(
-            `${API_URL}/api/JuegosSinCalificar`
+        const response = await fetch(`${API_URL}/api/JuegosSinCalificar`
             , {
                 method: "GET",
                 headers: {
@@ -59,7 +57,6 @@ export default function VistaTodosLosJuegos({ }: Props) {
         }
     }
 
-    // Handler para las estrellas
     function handleStarClick(index: number) {
         setCalificacion(index + 1);
     }

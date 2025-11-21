@@ -4,6 +4,7 @@ import SignIn from "./Pages/SignIn";
 import LogIn from "./Pages/LogIn";
 import PaginaPrincipal from "./Pages/PaginaPrincipal"
 import TodosJuegosView from "./Pages/TodosJuegosView";
+import MisJuegosJugados from "./Pages/MisJuegosJugadosView";
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Route path="/login" element={<LogIn />} />
         <Route path="/SignIn" element={<SignIn />} />
         <Route path="/TodosLosJuegos" element={<TodosJuegosView />} />
+        <Route path="/MisJuegosJugados" element={<MisJuegosJugados />} />
 
       </Routes>
     </>

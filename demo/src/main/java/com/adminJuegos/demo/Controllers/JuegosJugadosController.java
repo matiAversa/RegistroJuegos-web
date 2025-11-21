@@ -58,9 +58,19 @@ public class JuegosJugadosController {
     }
 
     @GetMapping("/JuegosJugados")
-    public ResponseEntity<List<DataJuegoJugado>> getJuegosJugados(@RequestParam("userId") Integer userId) {
+    public ResponseEntity<List<DataJuegoJugado>> getJuegosJugados(@RequestHeader("Authorization") String token) {
         try {
-            List<DataJuegoJugado> listajuegos = servicioJJ.getJuegosJugados(ServicePersona.findById(userId));
+
+            if (token.startsWith("Bearer ")) {
+                token = token.substring(7);
+            }
+            Claims claims = Jwts.parser()
+                    .setSigningKey(SECRET_KEY.getBytes())
+                    .parseClaimsJws(token)
+                    .getBody();
+            Integer id = claims.get("userId", Integer.class);
+
+            List<DataJuegoJugado> listajuegos = servicioJJ.getJuegosJugados(ServicePersona.findById(id));
             if (listajuegos != null && !listajuegos.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.OK).body(listajuegos);
             }
@@ -72,13 +82,19 @@ public class JuegosJugadosController {
     }
 
     @PostMapping("/EliminarJuegoJugado")
-    public ResponseEntity<Void> eliminarJuegoJugado (@RequestBody Map<String, String> body){
-
+    public ResponseEntity<Void> eliminarJuegoJugado (@RequestBody Map<String, String> body, @RequestHeader("Authorization") String token){
         try{
-            String idPersona = body.get("IdPersona");
-            String idJuego = body.get("IdJuego");
+            if (token.startsWith("Bearer ")) {
+                token = token.substring(7);
+            }
+            Claims claims = Jwts.parser()
+                    .setSigningKey(SECRET_KEY.getBytes())
+                    .parseClaimsJws(token)
+                    .getBody();
+            Integer id = claims.get("userId", Integer.class);
+            String idJuego = body.get("juegoId");
 
-            Integer idP = Integer.valueOf(idPersona);
+            Integer idP = Integer.valueOf(id);
             Integer idJ = Integer.valueOf(idJuego);
 
             boolean delete = this.servicioJJ.DeleteJuegoJugado(idP,idJ);
