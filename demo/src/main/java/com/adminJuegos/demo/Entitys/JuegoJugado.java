@@ -55,4 +55,6 @@ public class JuegoJugado {
     public Integer getId() {
         return id;
     }
+
+    public String getDescripcion() { return this.descripcion; }
 }

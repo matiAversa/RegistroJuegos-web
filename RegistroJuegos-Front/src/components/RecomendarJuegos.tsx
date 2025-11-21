@@ -27,6 +27,7 @@ export default function RecomendarJuegos({ }: Props) {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + localStorage.getItem("token")
             },
+            body: JSON.stringify({ recomendado: val }),
         });
 
         if (response.status == 204) {

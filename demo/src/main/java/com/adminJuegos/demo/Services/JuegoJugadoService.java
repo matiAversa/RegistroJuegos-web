@@ -63,7 +63,7 @@ public class JuegoJugadoService {
 
     public List<DataJuegoJugado> getJuegosJugados (Persona persona){
         return this.repoJuegoJugado.findByPersona(persona).stream()
-                .map(jj -> new DataJuegoJugado (jj.getJuego().getId(),jj.getCalificacion(), jj.getJuego().getNombre()))
+                .map(jj -> new DataJuegoJugado (jj.getJuego().getId(),jj.getCalificacion(), jj.getJuego().getNombre(), jj.getDescripcion()))
                 .collect(Collectors.toList());
     }
 

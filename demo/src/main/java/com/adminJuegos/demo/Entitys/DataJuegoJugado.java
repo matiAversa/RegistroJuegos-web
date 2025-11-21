@@ -12,6 +12,7 @@ public class DataJuegoJugado {
     int id;
     String nombre;
     Integer Calificacion;
+    String descripcion;
 
 
     public DataJuegoJugado(Integer calificacion, String nombre) {
@@ -19,7 +20,7 @@ public class DataJuegoJugado {
         this.nombre=nombre;
     }
 
-    public DataJuegoJugado(int id, Integer calificacion, String nombre) {
+    public DataJuegoJugado(int id, Integer calificacion, String nombre,  String descripcion) {
         this.Calificacion=calificacion;
         this.nombre=nombre;
         this.id=id;

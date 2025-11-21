@@ -7,6 +7,7 @@ type Juego = {
     id: number;
     nombre: string;
     calificacion: string;
+    descripcion: string;
 }
 
 type Props = {}
@@ -76,7 +77,6 @@ export default function VistaJuegosJugados({ }: Props) {
     }
 
     return (
-
         <>
             <div className="container d-flex justify-content-end mt-5">
                 <table className="table table-bordered table-hover" style={{ maxWidth: 700 }}>
@@ -84,6 +84,7 @@ export default function VistaJuegosJugados({ }: Props) {
                         <tr className="text-center">
                             <th>Nombre del Juego</th>
                             <th>Tu Calificación</th>
+                            <th>Descripción</th>
                             <th>Acción</th>
                         </tr>
                     </thead>
@@ -95,6 +96,7 @@ export default function VistaJuegosJugados({ }: Props) {
                                     {juego.calificacion}
                                     <span style={{ color: '#FFC107', fontSize: 20, marginLeft: 2 }}>⭐</span>
                                 </td>
+                                <td>{juego.descripcion}</td>
                                 <td>
                                     <button onClick={() => EliminarJuego(juego)} className="btn btn-danger">
                                         Eliminar
@@ -106,8 +108,6 @@ export default function VistaJuegosJugados({ }: Props) {
                 </table>
             </div>
         </>
-
-
     );
 
 

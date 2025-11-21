@@ -72,6 +72,7 @@ public class JuegosJugadosController {
 
             List<DataJuegoJugado> listajuegos = servicioJJ.getJuegosJugados(ServicePersona.findById(id));
             if (listajuegos != null && !listajuegos.isEmpty()) {
+                listajuegos.stream().forEach(System.out::println);
                 return ResponseEntity.status(HttpStatus.OK).body(listajuegos);
             }
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

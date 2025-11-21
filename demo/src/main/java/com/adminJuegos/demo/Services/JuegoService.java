@@ -28,4 +28,12 @@ public class JuegoService {
 
     }
 
+    public boolean estaRecomendado (String recomendado){
+        boolean esta = false;
+
+        Juego j = repoJuego.findByNombre(recomendado);
+        if (j != null){esta = true;}
+        return esta;
+    }
+
 }
