@@ -1,5 +1,6 @@
 {
   "name": "registrojuegos-front",
+  "homepage": "https://matiAversa/RegistroJuegos-web",
   "private": true,
   "version": "0.0.0",
   "type": "module",
