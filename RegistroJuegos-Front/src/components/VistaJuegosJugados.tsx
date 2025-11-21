@@ -24,6 +24,7 @@ export default function VistaJuegosJugados({ }: Props) {
             return;
         }
         incializarLista();
+
     },);
 
     if (!isAuthenticated) return null;
@@ -39,6 +40,10 @@ export default function VistaJuegosJugados({ }: Props) {
         if (response.status === 200) {
             const data = await response.json();
             setJuegosList(data);
+        } else {
+            if (response.status == 204) {
+                setJuegosList([]);
+            }
         }
     }
 
@@ -65,6 +70,8 @@ export default function VistaJuegosJugados({ }: Props) {
             }
         }
         incializarLista();
+        console.log("Nuevo juegosList en eliminar", juegosList);
+
 
     }
 

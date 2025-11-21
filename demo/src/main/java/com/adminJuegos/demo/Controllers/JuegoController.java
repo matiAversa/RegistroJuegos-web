@@ -15,9 +15,11 @@ import com.adminJuegos.demo.Entitys.Juego;
 import com.adminJuegos.demo.Services.JuegoService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api")
 public class JuegoController {
     
     JuegoService servicioJuego;
@@ -30,6 +32,7 @@ public class JuegoController {
         this.servicioJuego = servicioJuego;
     }
 
+    @PostMapping("/RecomendarJuego")
 
     public Juego getJuegoPorNombre (String nombre){
         return servicioJuego.findByNombre(nombre);

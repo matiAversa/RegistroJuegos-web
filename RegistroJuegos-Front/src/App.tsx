@@ -5,6 +5,7 @@ import LogIn from "./Pages/LogIn";
 import PaginaPrincipal from "./Pages/PaginaPrincipal"
 import TodosJuegosView from "./Pages/TodosJuegosView";
 import MisJuegosJugados from "./Pages/MisJuegosJugadosView";
+import RecomendarJuegosView from "./Pages/RecomendarJuegosView";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/SignIn" element={<SignIn />} />
         <Route path="/TodosLosJuegos" element={<TodosJuegosView />} />
         <Route path="/MisJuegosJugados" element={<MisJuegosJugados />} />
+        <Route path="/RecomendarJuegos" element={<RecomendarJuegosView />} />
 
       </Routes>
     </>
