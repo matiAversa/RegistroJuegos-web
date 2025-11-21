@@ -47,7 +47,7 @@ export default function VistaSingIn({ }: Props) {
 
     const Registrar = async () => {
 
-        const response = await fetch('${API_URL}/SignIn', {
+        await fetch('${API_URL}/SignIn', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ mail, password }),
