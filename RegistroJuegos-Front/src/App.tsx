@@ -1,5 +1,5 @@
 
-import { HashRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import SignIn from "./Pages/SignIn";
 import LogIn from "./Pages/LogIn";
 import PaginaPrincipal from "./Pages/PaginaPrincipal"
@@ -11,17 +11,15 @@ function App() {
 
   return (
     <>
-      <HashRouter basename="/RegistroJuegos-web/">
-        <Routes>
-          <Route path="/" element={<PaginaPrincipal />} />
-          <Route path="/login" element={<LogIn />} />
-          <Route path="/SignIn" element={<SignIn />} />
-          <Route path="/TodosLosJuegos" element={<TodosJuegosView />} />
-          <Route path="/MisJuegosJugados" element={<MisJuegosJugados />} />
-          <Route path="/RecomendarJuegos" element={<RecomendarJuegosView />} />
+      <Routes>
+        <Route path="/" element={<PaginaPrincipal />} />
+        <Route path="/login" element={<LogIn />} />
+        <Route path="/SignIn" element={<SignIn />} />
+        <Route path="/TodosLosJuegos" element={<TodosJuegosView />} />
+        <Route path="/MisJuegosJugados" element={<MisJuegosJugados />} />
+        <Route path="/RecomendarJuegos" element={<RecomendarJuegosView />} />
 
-        </Routes>
-      </HashRouter>
+      </Routes>
     </>
   );
 }
