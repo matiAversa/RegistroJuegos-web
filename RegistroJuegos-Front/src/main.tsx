@@ -11,7 +11,7 @@ const clientId = "248141265838-c86ptjkolt2bp9h7sargs500kg0coitq.apps.googleuserc
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <HashRouter basename="/RegistroJuegos-web/">
+    <HashRouter basename={import.meta.env.BASE_URL}>
       <GoogleOAuthProvider clientId={clientId}>
         <AuthProvider>
           <App />
