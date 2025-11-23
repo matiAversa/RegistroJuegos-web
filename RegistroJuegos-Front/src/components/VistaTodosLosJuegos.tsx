@@ -28,6 +28,7 @@ export default function VistaTodosLosJuegos({ }: Props) {
             return;
         }
         incializarLista();
+        console.log("hago")
     }, []);
 
     if (!isAuthenticated) return null;
