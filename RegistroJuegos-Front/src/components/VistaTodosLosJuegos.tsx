@@ -28,7 +28,7 @@ export default function VistaTodosLosJuegos({ }: Props) {
             return;
         }
         incializarLista();
-    },);
+    }, []);
 
     if (!isAuthenticated) return null;
 

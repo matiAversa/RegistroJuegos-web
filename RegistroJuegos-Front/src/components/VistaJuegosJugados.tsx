@@ -26,7 +26,7 @@ export default function VistaJuegosJugados({ }: Props) {
         }
         incializarLista();
 
-    },);
+    }, []);
 
     if (!isAuthenticated) return null;
 
