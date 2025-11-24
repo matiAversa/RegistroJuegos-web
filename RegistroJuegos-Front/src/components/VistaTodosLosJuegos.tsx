@@ -16,6 +16,7 @@ export default function VistaTodosLosJuegos({ }: Props) {
     const navigate = useNavigate();
     const { isAuthenticated } = useAuth();
     const [juegosList, setJuegosList] = useState<Juego[]>([]);
+    const [loading, setLoading] = useState(true); // CAMBIO
 
     const [modalOpen, setModalOpen] = useState(false);
     const [juegoSeleccionado, setJuegoSeleccionado] = useState<Juego | null>(null);
@@ -28,23 +29,26 @@ export default function VistaTodosLosJuegos({ }: Props) {
             return;
         }
         incializarLista();
-        console.log("hago")
     }, []);
 
     if (!isAuthenticated) return null;
 
     async function incializarLista() {
-        const response = await fetch(`${API_URL}/api/JuegosSinCalificar`
-            , {
+        setLoading(true); // CAMBIO
+        try {
+            const response = await fetch(`${API_URL}/api/JuegosSinCalificar`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": "Bearer " + localStorage.getItem("token")
                 }
             });
-        if (response.status === 200) {
-            const data = await response.json();
-            setJuegosList(data);
+            if (response.status === 200) {
+                const data = await response.json();
+                setJuegosList(data);
+            }
+        } finally {
+            setLoading(false); // CAMBIO
         }
     }
 
@@ -101,29 +105,34 @@ export default function VistaTodosLosJuegos({ }: Props) {
     return (
         <>
             <div className="container d-flex justify-content-end mt-5">
-                <table className="table table-bordered table-hover" style={{ maxWidth: 700 }}>
-                    <thead className="thead-light">
-                        <tr className="text-center">
-                            <th>Nombre del Juego</th>
-                            <th>Promedio de Calificación</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {juegosList.map((juego, id) => (
-                            <tr key={id} className="text-center align-middle">
-                                <td>{juego.nombre}</td>
-                                <td>{juego.promedio}⭐</td>
-                                <td>
-                                    <button onClick={CalificarJuego(juego)} className="btn btn-primary">Calificar</button>
-                                </td>
+                {loading ? ( // CAMBIO
+                    <div style={{ width: 700, textAlign: "center", padding: 40 }}>
+                        <span style={{ fontSize: 20 }}>Cargando juegos...</span>
+                    </div>
+                ) : (
+                    <table className="table table-bordered table-hover" style={{ maxWidth: 700 }}>
+                        <thead className="thead-light">
+                            <tr className="text-center">
+                                <th>Nombre del Juego</th>
+                                <th>Promedio de Calificación</th>
+                                <th>Acción</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {juegosList.map((juego, id) => (
+                                <tr key={id} className="text-center align-middle">
+                                    <td>{juego.nombre}</td>
+                                    <td>{juego.promedio}⭐</td>
+                                    <td>
+                                        <button onClick={CalificarJuego(juego)} className="btn btn-primary">Calificar</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
             </div>
 
-            {/* MODAL */}
             {modalOpen && (
                 <div style={{
                     position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
